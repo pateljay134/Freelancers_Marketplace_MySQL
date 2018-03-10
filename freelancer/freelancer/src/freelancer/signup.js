@@ -1,4 +1,4 @@
-import React, {Component} from 'react';
+import React from 'react';
 import './css/freelancer.css';
 import './css/bootstrap.min.css';
 import './css/main.css';
@@ -87,5 +87,29 @@ class SignUp extends React.Component{
         )
     }
 }
+
+// function mapStateToProps(state){
+//     return {
+//         user : state.logged_in
+//     }
+// }
+
+// function mapDispatchToProps(dispatch){
+//     return{
+//         registerUser : (details) => {
+//             // axios.post('http://localhost:3001/signupprocess'), details )
+//             // .then((res) => {
+//             //     dispatch({
+//             //         type : 'logged_in', payload : res
+//             //     });
+//             //     sessionStorage.setItem("loggedin", true);
+//             //     sessionStorage.setItem("email", res.data.email)
+//             //     window.location.href = "http://localhost:3000/"
+
+//             // })
+//         }
+//     }
+// }
+
 
 export default SignUp;

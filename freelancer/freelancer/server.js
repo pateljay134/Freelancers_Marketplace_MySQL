@@ -8,15 +8,15 @@ app.use(bodyParser.urlencoded({ extended: true }));
 
 app.use(bodyParser.json());
 
-app.use(function(req, res, next) {
-	res.setHeader('Access-Control-Allow-Origin', '*');
-	res.setHeader('Access-Control-Allow-Credentials', 'true');
-	res.setHeader('Access-Control-Allow-Methods', 'GET,HEAD,OPTIONS,POST,PUT,DELETE');
-	res.setHeader('Access-Control-Allow-Headers', 'Access-Control-Allow-Headers, Origin,Accept, X-Requested-With, Content-Type, Access-Control-Request-Method, Access-Control-Request-Headers');
-	//and remove cacheing so we get the most recent comments
-	res.setHeader('Cache-Control', 'no-cache');
-	next();
-});
+// app.use(function(req, res, next) {
+// 	res.setHeader('Access-Control-Allow-Origin', '*');
+// 	res.setHeader('Access-Control-Allow-Credentials', 'true');
+// 	res.setHeader('Access-Control-Allow-Methods', 'GET,HEAD,OPTIONS,POST,PUT,DELETE');
+// 	res.setHeader('Access-Control-Allow-Headers', 'Access-Control-Allow-Headers, Origin,Accept, X-Requested-With, Content-Type, Access-Control-Request-Method, Access-Control-Request-Headers');
+// 	//and remove cacheing so we get the most recent comments
+// 	res.setHeader('Cache-Control', 'no-cache');
+// 	next();
+// });
 
 var connection = mysql.createConnection({
   host: 'localhost',
@@ -25,8 +25,19 @@ var connection = mysql.createConnection({
   database: 'freelancer'
 });
 
+app.use(function(req, res, next) {
+  res.setHeader('Access-Control-Allow-Origin', '*');
+  res.setHeader('Access-Control-Allow-Credentials', 'true');
+  res.setHeader('Access-Control-Allow-Methods', 'GET,HEAD,OPTIONS,POST,PUT,DELETE');
+  res.setHeader('Access-Control-Allow-Headers', 'Access-Control-Allow-Headers, Origin,Accept, X-Requested-With, Content-Type, Access-Control-Request-Method, Access-Control-Request-Headers');
+  //and remove cacheing so we get the most recent comments
+  res.setHeader('Cache-Control', 'no-cache');
+  next();
+});  
+
 app.post('/signupprocess', function(req, res) {
   var user = req.body;
+  console.log(user);
   var query = connection.query('INSERT INTO users SET ?' ,user,  function(err, result) {
     //if(!err)
     res.json({data_inserted:true});
@@ -40,13 +51,10 @@ app.post('/signinprocess', function(req, res) {
     email : req.body.email,
     password : req.body.password
   }
-
+  console.log(req.body.email);
   connection.query("SELECT password FROM users WHERE email = ?", user.email,function(err, rows) {
     if (err) return callback(err);
     var retrieved_password = rows[0].password;
-
-    console.log(retrieved_password);
-    console.log(user.password);
     res.json({logged_in : retrieved_password === user.password ? true : false})
   });
 
@@ -64,12 +72,13 @@ app.post('/addproject', function(req, res) {
 //  });
 var name;
 app.post('/profilefetch', function(req, res) {
-
-  connection.query("SELECT * from users where email = 'p@gmail.com'",function(err, rows) {
+  console.log(req.body.email);
+  var email = req.body.email;
+  connection.query("SELECT * from users where email = ?",email,function(err, rows) {
     if (err) return callback(err);
     var user_data = rows[0];
     // // console.log(retrieved_password);
-    // console.log(user_data);
+    console.log(user_data);
     res.json(user_data)
   });
 
@@ -83,6 +92,18 @@ app.post('/profileupdate', function(req, res) {
     res.json({data_inserted:true});
   });
 });
+
+app.post('/projectsfetch', function(req, res) {
+  connection.query("SELECT * from projects",function(err, rows) {
+    if (err) return callback(err);
+    var projects = rows;
+    console.log(rows);
+    res.json({rows : rows})
+  });
+
+});
+
+
 
 var port = process.env.API_PORT || 3001;
 

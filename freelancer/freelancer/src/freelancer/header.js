@@ -1,4 +1,4 @@
-import React, {Component} from 'react';
+import React from 'react';
 import './css/bootstrap.min.css';
 // import 'https://fonts.googleapis.com/css?family=Catamaran:100,200,300,400,500,600,700,800,900';
 // import 'https://fonts.googleapis.com/css?family=Lato:100,100i,300,300i,400,400i,700,700i,900,900i';
@@ -8,8 +8,6 @@ class Header extends React.Component{
   constructor(props){
     super(props)
 		this.state = {
-      // bufferValue: '0',
-      // logged_in: false,
       Profile : './Profile',
       SignOut : './SignOut',
       AddProject : './AddProject',
@@ -32,9 +30,12 @@ class Header extends React.Component{
 handleSignOut(e){
   debugger
   window.sessionStorage.setItem("logged_in",false)
+  window.sessionStorage.setItem("username",null)
+  window.sessionStorage.setItem("password",null)  
   this.setState({ logged_in : false })
-  if(!window.sessionStorage.logged_in){
-    this.props.history.push('/');
+  if(window.sessionStorage.logged_in === "false"){
+    // this.props.history.push('/');
+    window.location.href = "http://localhost:3000/";
   }
 }
 

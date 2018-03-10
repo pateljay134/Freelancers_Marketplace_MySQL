@@ -1,12 +1,14 @@
-import React, {Component} from 'react';
+import React from 'react';
 import './css/freelancer.css';
 import './css/bootstrap.min.css';
 import './css/main.css';
 import './css/util.css';
 import axios from 'axios';
+// import UserDetails from './userdetails';
 // import 'https://fonts.googleapis.com/css?family=Catamaran:100,200,300,400,500,600,700,800,900';
 // import 'https://fonts.googleapis.com/css?family=Lato:100,100i,300,300i,400,400i,700,700i,900,900i';
 import './css/one-page-wonder.min.css';
+import Homepage from './homepage';
 //import { debug } from 'util';
 
 class Profile extends React.Component{
@@ -63,7 +65,9 @@ class Profile extends React.Component{
     }
     handleLoad(e){
         e.preventDefault();
-        axios.post('http://localhost:3001/profilefetch')
+        var profile = {email : window.sessionStorage.getItem("username")}
+        debugger
+        axios.post('http://localhost:3001/profilefetch', profile)
         .then(res => {
             debugger
             this.setState({
@@ -81,29 +85,31 @@ class Profile extends React.Component{
      }
 
 	render(){
+        debugger
+        if(window.sessionStorage.username !== "null"){
 		return(
             <div className="limiter">
 		        <div className="container-login100">
 			        <div className="wrap-login100 p-t-50 p-b-90">
 				        <form method = "POST" className="login100-form validate-form flex-sb flex-w">
 					        <span className="login100-form-title p-b-51"> Profile </span>
-                            <div className="wrap-input100 validate-input m-b-16" data-validate = "Name is required">
+                            Name : <div className="wrap-input100 validate-input m-b-16" data-validate = "Name is required">
 						        <input className="input100" type="text" name="Name" onChange = {this.handleName.bind(this)} placeholder={this.state.name} />
 						        <span className="focus-input100"></span>
 					        </div>
-                            <div className="wrap-input100 validate-input m-b-16" data-validate = "Email address is required">
+                            Email : <div className="wrap-input100 validate-input m-b-16" data-validate = "Email address is required">
 						        <input className="input100" type="email" name="username" onChange = {this.handleEmail.bind(this)} placeholder={this.state.email} />
 						        <span className="focus-input100"></span>
 					        </div>
-                            <div className="wrap-input100 validate-input m-b-16" data-validate = "Phone Number is required">
+                            Phone Number : <div className="wrap-input100 validate-input m-b-16" data-validate = "Phone Number is required">
                                 <input className="input100" type="number" min = '1111111111' max = '9999999999' name="phone_number" onChange = {this.handlePhoneNumber.bind(this)} placeholder={this.state.phone_number!==null ? this.state.phone_number : "Enter Your Phone Number"} />
                                 <span className="focus-input100"></span>
                             </div>
-                            <div className="wrap-input100 validate-input m-b-16" data-validate = "About Me">
+                            What You Are : <div className="wrap-input100 validate-input m-b-16" data-validate = "About Me">
 						        <input className="input100" type="text" name="about_me" required onChange = {this.handleAboutMe.bind(this)} placeholder={this.state.about_me!==null ? this.state.about_me : "Enter Something About You"} />
 						        <span className="focus-input100"></span>
 					        </div>
-                            <div className="wrap-input100 validate-input m-b-16" data-validate = "Skills">
+                            Your Skills : <div className="wrap-input100 validate-input m-b-16" data-validate = "Skills">
                                 <input className="input100" type="text" name="skills" required onChange = {this.handleSkills.bind(this)} placeholder={this.state.skills!==null ? this.state.skills : "Enter Your Skills"} />
                                 <span className="focus-input100"></span>
                             </div>
@@ -125,6 +131,13 @@ class Profile extends React.Component{
 		        </div>
 	        </div>
         )
+    } else{
+        return(<div>
+            {/* <Header/> */}
+            <Homepage/>
+        </div>
+        )
+        }
     }
 }
 

@@ -1,4 +1,4 @@
-import React, {Component} from 'react';
+import React from 'react';
 import './css/freelancer.css';
 import './css/bootstrap.min.css';
 import './css/main.css';
@@ -55,10 +55,10 @@ class AddProject extends React.Component{
             project_added= res.data.project_added
             if(project_added)
             this.props.history.push('/');
-            console.log(project_added);
         })
     }
 	render(){
+        if(window.sessionStorage.logged_in === "true"){
 		return(
             <div className="limiter">
 		        <div className="container-login100">
@@ -99,6 +99,10 @@ class AddProject extends React.Component{
 	        </div>
         )
     }
-}
+    else { return(
+        window.location.href = "http://localhost:3000/"
+    )
+    }
+}}
 
 export default AddProject;

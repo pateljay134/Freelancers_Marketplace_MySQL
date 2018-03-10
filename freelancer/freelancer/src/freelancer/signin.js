@@ -1,15 +1,19 @@
-import React, {Component} from 'react';
+import React from 'react';
 import './css/freelancer.css';
 import './css/bootstrap.min.css';
 import './css/main.css';
 import './css/util.css';
 import axios from 'axios';
-import {Redirect} from 'react-router';
+// import {Redirect} from 'react-router';
 import Homepage from './homepage';
-import Header from './header';
+// import Header from './header';
+// import {Provider} from 'react-redux';
+// import UserDetails from './userdetails';
 // import 'https://fonts.googleapis.com/css?family=Catamaran:100,200,300,400,500,600,700,800,900';
 // import 'https://fonts.googleapis.com/css?family=Lato:100,100i,300,300i,400,400i,700,700i,900,900i';
 import './css/one-page-wonder.min.css';
+
+// const store = createStore(allReducers);
 
 class SignIn extends React.Component{
     constructor(props) {
@@ -32,21 +36,17 @@ class SignIn extends React.Component{
     }
     handleSubmit(e){
         e.preventDefault();
-        debugger
         var logged_in;
         var val = {email: this.state.email, password: this.state.password}
         axios.post('http://localhost:3001/signinprocess', val)
         .then(res => {
-            debugger
             logged_in = res.data.logged_in;
-            console.log(logged_in);
-            console.log(res.data.logged_in);
             window.sessionStorage.setItem("logged_in", logged_in);
             window.sessionStorage.setItem("username", this.state.email);
             window.sessionStorage.setItem("password", this.state.password);
-                //<Redirect to='http://localhost:3000/' />
             if(logged_in){
-                this.props.history.push('/');
+                // this.props.history.push('/Profile');
+                window.location.href = "http://localhost:3000/"
             }
         })
         
@@ -55,6 +55,7 @@ class SignIn extends React.Component{
         debugger
         if(window.sessionStorage.logged_in === "false"){
 		return(
+        // <Provider store = {store}>
             <div className="limiter">
 		        <div className="container-login100">
 			        <div className="wrap-login100 p-t-50 p-b-90">
@@ -77,6 +78,7 @@ class SignIn extends React.Component{
 			        </div>
 		        </div>
 	        </div>
+            // {/* </Provider> */}
         )
     }else{
         return(<div>
@@ -86,6 +88,9 @@ class SignIn extends React.Component{
         )
     }
     }
+    
+
+    
 }
 
 export default SignIn;
