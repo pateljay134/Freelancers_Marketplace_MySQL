@@ -73,7 +73,7 @@ class AddProject extends React.Component{
 						        <input className="input100" type="text" name="description" required onChange = {this.handleDescription.bind(this)} placeholder="Enter Description" />
 						        <span className="focus-input100"></span>
 					        </div>
-                            <div className="wrap-input100 validate-input m-b-16" data-validate = "Password is required">
+                            <div className="wrap-input100 validate-input m-b-16" data-validate = "Skills is required">
                                 <input className="input100" type="text" name="skills" required onChange = {this.handleSkills.bind(this)} placeholder="Required Skills" />
                                 <span className="focus-input100"></span>
                             </div>

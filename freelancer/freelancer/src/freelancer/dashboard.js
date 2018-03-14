@@ -15,10 +15,9 @@ class Profile extends React.Component{
     constructor(props) {
         super(props);
         this.state = {projects : []}
-        this.handleLoad = this.handleLoad.bind(this);
     }
 
-    handleLoad(){
+    componentDidMount() {
         debugger
         axios.post('http://localhost:3001/projectsfetch')
         .then(res => {
@@ -29,9 +28,6 @@ class Profile extends React.Component{
         });
         debugger
     }
-    componentDidMount() {
-        window.addEventListener('load', this.handleLoad);
-     }
 
 	render(){
 

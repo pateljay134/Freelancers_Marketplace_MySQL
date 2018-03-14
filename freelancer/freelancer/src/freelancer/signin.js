@@ -18,7 +18,7 @@ import './css/one-page-wonder.min.css';
 class SignIn extends React.Component{
     constructor(props) {
         super(props);
-        this.state = { email: null, password: null };
+        this.state = { username: null, password: null };
         this.handleSubmit = this.handleSubmit.bind(this);
         this.handleEmail = this.handleEmail.bind(this);
         this.handlePassword = this.handlePassword.bind(this);
@@ -26,7 +26,7 @@ class SignIn extends React.Component{
    
     handleEmail(e){
         this.setState({
-            email : e.target.value
+            username : e.target.value
         })
     }
     handlePassword(e){
@@ -36,16 +36,14 @@ class SignIn extends React.Component{
     }
     handleSubmit(e){
         e.preventDefault();
-        var logged_in;
-        var val = {email: this.state.email, password: this.state.password}
+        var val = {username: this.state.username, password: this.state.password}
+        console.log(val)
         axios.post('http://localhost:3001/signinprocess', val)
         .then(res => {
-            logged_in = res.data.logged_in;
-            window.sessionStorage.setItem("logged_in", logged_in);
-            window.sessionStorage.setItem("username", this.state.email);
+            window.sessionStorage.setItem("logged_in", res.data.logged_in);
+            window.sessionStorage.setItem("username", this.state.username);
             window.sessionStorage.setItem("password", this.state.password);
-            if(logged_in){
-                // this.props.history.push('/Profile');
+            if(res.data.logged_in){
                 window.location.href = "http://localhost:3000/"
             }
         })
@@ -53,7 +51,7 @@ class SignIn extends React.Component{
     }
 	render(){
         debugger
-        if(window.sessionStorage.logged_in === "false"){
+        if(!sessionStorage.logged_in){
 		return(
         // <Provider store = {store}>
             <div className="limiter">

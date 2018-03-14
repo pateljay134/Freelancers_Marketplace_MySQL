@@ -6,6 +6,7 @@ import HomePage from './homepage';
 import AddProject from './addproject';
 import Profile from './profile';
 import Dashboard from './dashboard';
+import AddBid from './addbid';
 // import {Provider} from 'react-redux';
 //import allReducers from './reducers'
 // import { createStore } from '../../../../../Library/Caches/typescript/2.7/node_modules/redux';
@@ -54,6 +55,7 @@ class BodyData extends React.Component{
 					<Route path="/Profile" component={Profile} />
 					{/* <Route path="/Profile" component={Profile} store = {store}/>  */}
 					<Route path="/Dashboard" component={Dashboard} /> 
+					<Route path="/addbid" component={AddBid} /> 
 					</Switch>
 				</div>
 			</Router>

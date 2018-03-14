@@ -4,7 +4,6 @@ import React from 'react';
 class HomePage extends React.Component{
 
 	render(){
-		//const {value} =  this.state
 		return(
             <div>
                 <header className="masthead text-center text-white">

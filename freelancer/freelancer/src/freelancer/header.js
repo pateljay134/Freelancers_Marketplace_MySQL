@@ -28,7 +28,7 @@ class Header extends React.Component{
 // }
 
 handleSignOut(e){
-  debugger
+  // debugger
   window.sessionStorage.setItem("logged_in",false)
   window.sessionStorage.setItem("username",null)
   window.sessionStorage.setItem("password",null)  
@@ -40,7 +40,7 @@ handleSignOut(e){
 }
 
 	render(){
-    debugger
+    // debugger
     if(window.sessionStorage.logged_in === "true"){
       return(
         <nav className="navbar navbar-expand-lg navbar-dark navbar-custom fixed-top">
