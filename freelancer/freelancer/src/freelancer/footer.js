@@ -9,7 +9,7 @@ class Footer extends React.Component{
 		return(
 			<footer className="py-5 bg-black">
             <div className="container">
-              <p className="m-0 text-center text-white small">Copyright &copy; Your Website 2018</p>
+              <p className="m-0 text-center text-white small">Copyright &copy; CMPE 273 Spring 2018</p>
             </div>
       </footer>
 		)

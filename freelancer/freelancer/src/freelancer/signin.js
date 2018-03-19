@@ -5,7 +5,6 @@ import './css/main.css';
 import './css/util.css';
 import axios from 'axios';
 // import {Redirect} from 'react-router';
-import Homepage from './homepage';
 // import Header from './header';
 // import {Provider} from 'react-redux';
 // import UserDetails from './userdetails';
@@ -36,22 +35,39 @@ class SignIn extends React.Component{
     }
     handleSubmit(e){
         e.preventDefault();
-        var val = {username: this.state.username, password: this.state.password}
-        console.log(val)
-        axios.post('http://localhost:3001/signinprocess', val)
+
+        var username = {username : this.state.username}
+        axios.post('http://localhost:3001/checkemail', username)
         .then(res => {
-            window.sessionStorage.setItem("logged_in", res.data.logged_in);
-            window.sessionStorage.setItem("username", this.state.username);
-            window.sessionStorage.setItem("password", this.state.password);
-            if(res.data.logged_in){
-                window.location.href = "http://localhost:3000/"
+            debugger
+            var user_exist = res.data.user_exist;
+                //<Redirect to='http://localhost:3000/' />
+            if(!user_exist){
+                document.getElementById('username').innerHTML = "User with this username does not exist"
+                // window.location.href = "http://localhost:3000/Da" 
             }
-        })
-        
+            else{
+                var val = {username: this.state.username, password: this.state.password}
+                console.log(val)
+                axios.post('http://localhost:3001/signinprocess', val)
+                .then(res => {
+                    if(res.data.logged_in){
+                        window.sessionStorage.setItem("logged_in", res.data.logged_in);
+                        window.sessionStorage.setItem("username", this.state.username);
+                        window.sessionStorage.setItem("password", this.state.password);
+                        window.location.href = "http://localhost:3000/"
+                    }
+                    else{
+                        window.location.href = "http://localhost:3000/SignIn"
+                    }
+                })
+            }
+        });
+ 
     }
 	render(){
         debugger
-        if(!sessionStorage.logged_in){
+        if(window.sessionStorage.getItem("logged_in") || window.sessionStorage.logged_in===undefined){
 		return(
         // <Provider store = {store}>
             <div className="limiter">
@@ -63,6 +79,7 @@ class SignIn extends React.Component{
 						        <input className="input100" type="email" name="username" required onChange = {this.handleEmail.bind(this)} placeholder="Username"/>
 						        <span className="focus-input100"></span>
 					        </div>
+                            <p id="username" style={{color:'blue', marginBottom:5}}></p>
                             <div className="wrap-input100 validate-input m-b-16" data-validate = "Password is required">
                                 <input className="input100" type="password" name="pass" required onChange = {this.handlePassword.bind(this)} placeholder="Password"/>
                                 <span className="focus-input100"></span>
@@ -79,10 +96,8 @@ class SignIn extends React.Component{
             // {/* </Provider> */}
         )
     }else{
-        return(<div>
-            {/* <Header/> */}
-            <Homepage/>
-        </div>
+        return(
+            window.location.href = "http://localhost:3000"
         )
     }
     }

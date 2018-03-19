@@ -5,16 +5,12 @@ import './css/main.css';
 import './css/util.css';
 import DisplayProjects from './displayprojects';
 import axios from 'axios';
-// import HomePage from './homepage';
-// import 'https://fonts.googleapis.com/css?family=Catamaran:100,200,300,400,500,600,700,800,900';
-// import 'https://fonts.googleapis.com/css?family=Lato:100,100i,300,300i,400,400i,700,700i,900,900i';
 import './css/one-page-wonder.min.css';
-//import { debug } from 'util';
 
-class Profile extends React.Component{
+class DashBoard extends React.Component{
     constructor(props) {
         super(props);
-        this.state = {projects : []}
+        this.state = {projects : [],average_days:[]}
     }
 
     componentDidMount() {
@@ -23,7 +19,8 @@ class Profile extends React.Component{
         .then(res => {
             debugger
             this.setState({
-                projects : res.data.rows
+                projects : res.data.rows,
+                average_days : res.data.result
             })
         });
         debugger
@@ -32,12 +29,15 @@ class Profile extends React.Component{
 	render(){
 
         var project_list = this.state.projects.map( data => { 
-            return(
-            <DisplayProjects project_id = {data.project_id}  title = {data.title} description = {data.description} skills_required = {data.skills_required} employer = {data.employer} budget_range = {data.budget_range} total_bids = {data.total_bids}/>
-            )
+                return(
+                <DisplayProjects project_id = {data.project_id}  title = {data.title} description = {data.description} skills_required = {data.skills_required} employer = {data.employer} budget_range = {data.budget_range} total_bids = {data.total_bids} status = {data.status}/>
+
+                )
         })
 
+
         if(window.sessionStorage.logged_in === "true"){
+            
             return(
                 <div className="table">
                 
@@ -50,7 +50,8 @@ class Profile extends React.Component{
                             <th>Skills Required</th>
                             <th>Employer</th>
                             <th>Budget Range</th>
-                            <th>Number of Bids</th>
+                            <th>Project Status</th>
+                            <th>Average Days</th>
                             </tr>
                         </thead>
                         <tbody>
@@ -68,4 +69,4 @@ class Profile extends React.Component{
     }
 }
 
-export default Profile;
+export default DashBoard;

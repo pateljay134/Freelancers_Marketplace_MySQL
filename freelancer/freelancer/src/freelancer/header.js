@@ -1,7 +1,5 @@
 import React from 'react';
 import './css/bootstrap.min.css';
-// import 'https://fonts.googleapis.com/css?family=Catamaran:100,200,300,400,500,600,700,800,900';
-// import 'https://fonts.googleapis.com/css?family=Lato:100,100i,300,300i,400,400i,700,700i,900,900i';
 import './css/one-page-wonder.min.css';
 
 class Header extends React.Component{
@@ -13,19 +11,18 @@ class Header extends React.Component{
       AddProject : './AddProject',
       SignIn : './SignIn',
       SignUp  : './SignUp',
-      Dashboard  : './Dashboard'
+      Dashboard  : './Dashboard',
+      WorkSpot : './workspot'
 		}
     this.handleSignOut = this.handleSignOut.bind(this);
+    this.handleProfile = this.handleProfile.bind(this);
   }
 
-  //window.sessionStorage.getItem("logged_in");
-
-// componentDidMount() {
-//   debugger
-//       this.setState({
-//         logged_in : window.sessionStorage.getItem("logged_in")
-//       })
-// }
+handleProfile(e){
+  window.sessionStorage.setItem("bidderprofile",false)
+  window.sessionStorage.setItem("bidderprofilename",null)
+  window.location.href = "http://localhost:3000/Profile";
+}
 
 handleSignOut(e){
   // debugger
@@ -55,7 +52,10 @@ handleSignOut(e){
                   <a className="nav-link" value = 'Dashboard' href = {this.state.Dashboard} >Dashboard</a>
                 </li>
                 <li className="nav-item">
-                  <a className="nav-link" value = 'Profile' href = {this.state.Profile} >Profile</a>
+                  <a className="nav-link" value = 'WorkSpot' href = {this.state.WorkSpot} >WorkSpot</a>
+                </li>
+                <li className="nav-item">
+                  <a className="nav-link" value = 'Profile' href = {this.state.Profile} onClick={this.handleProfile} >Profile</a>
                 </li>
                 <li className="nav-item">
                   <a className="nav-link" value = 'AddProject' href = {this.state.AddProject} >Add Project</a>

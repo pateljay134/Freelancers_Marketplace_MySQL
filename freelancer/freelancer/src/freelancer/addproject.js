@@ -12,12 +12,13 @@ import './css/one-page-wonder.min.css';
 class AddProject extends React.Component{
     constructor(props) {
         super(props);
-        this.state = { name: null, description: null, skills: null, range: null };
+        this.state = {file: '', name: null, description: null, skills: null, range: null, filename:null };
         this.handleSubmit = this.handleSubmit.bind(this);
         this.handleName = this.handleName.bind(this);
         this.handleDescription = this.handleDescription.bind(this);
         this.handleSkills = this.handleSkills.bind(this);
         this.handleRange = this.handleRange.bind(this);
+        this.handleFile = this.handleFile.bind(this);
     }
       
     handleName(e){
@@ -44,17 +45,49 @@ class AddProject extends React.Component{
             range : e.target.value
         })
     }
+    handleFile(e){
+        e.preventDefault();
+        let reader = new FileReader();
+        let file = e.target.files[0];
+        reader.onloadend = () => {
+            this.setState({
+                file: file,
+            });
+        }
+        reader.readAsDataURL(file)
+    }
 
     handleSubmit(e){
         e.preventDefault();
         debugger
+
+        const formData = new FormData();
+        formData.append('file', this.state.file);
+        formData.append('id', 1);
+        const config = {
+            headers: {
+                'content-type': 'multipart/form-data'
+            }
+        }
+
         var project_added;
-        var val = {name: this.state.name, description: this.state.description, skills: this.state.skills, range: this.state.range}
-        axios.post('http://localhost:3001/addproject', val)
+        var val = {name: this.state.name, description: this.state.description, skills: this.state.skills, range: this.state.range,username:window.sessionStorage.getItem("username")}
+        console.log(val)
+        formData.append('name', this.state.name);
+        formData.append('description', this.state.description);
+        formData.append('skills', this.state.skills);
+        formData.append('range', this.state.range);
+        formData.append('username', window.sessionStorage.getItem("username"));
+
+        axios.post('http://localhost:3001/addproject', formData,config)
         .then(res => {
             project_added= res.data.project_added
-            if(project_added)
-            this.props.history.push('/');
+            if(project_added){
+                alert("project added")
+                window.location.href = "http://localhost:3000/workspot"
+            }
+            // window.location.href = "http://localhost:3000/Profile"
+            // this.props.history.push('/addproject');
         })
     }
 	render(){
@@ -65,8 +98,13 @@ class AddProject extends React.Component{
 			        <div className="wrap-login100 p-t-50 p-b-90">
 				        <form className="login100-form validate-form flex-sb flex-w">
 					        <span className="login100-form-title p-b-51"> Add New Project </span>
+                            
+                            <div className="input100" data-validate = "File is required">
+                                <input type="file" onChange={this.handleFile} className="input100" style = {{marginTop:10}}/><br />
+                            </div>
+
                             <div className="wrap-input100 validate-input m-b-16" data-validate = "Project Name is required">
-						        <input className="input100" type="text" name="projectname" required onChange = {this.handleName.bind(this)} placeholder="Enter Project Name" />
+						        <input className="input100" type="text" name="projectname" required onChange = {this.handleName.bind(this)} placeholder={this.state.name!==null? this.state.name :"Enter Project Name"} />
 						        <span className="focus-input100"></span>
 					        </div>
                             <div className="wrap-input100 validate-input m-b-16" data-validate = "Description must be there">

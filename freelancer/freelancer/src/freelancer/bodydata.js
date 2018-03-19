@@ -7,41 +7,14 @@ import AddProject from './addproject';
 import Profile from './profile';
 import Dashboard from './dashboard';
 import AddBid from './addbid';
-// import {Provider} from 'react-redux';
-//import allReducers from './reducers'
-// import { createStore } from '../../../../../Library/Caches/typescript/2.7/node_modules/redux';
-
-// function loadState(){
-// 	try{
-// 		let current_state = sessionStorage.getItem("logged_in");
-// 		if(current_state === null) { return this.initializeState();}
-// 		return;
-// 	}
-// 	catch(err){
-// 		return initializeState();
-// 	}
-// }
-
-// function initializeState(){
-// 	let initial_state = false;
-// 	localStorage.setItem("logged_in", initial_state);
-// }
-// const store = createStore( loadState);
-
+import WorkSpot from './workspot';
+import AdminAction from './adminaction';
 
 class BodyData extends React.Component{
-	// handleLoad(e){
-    //     e.preventDefault();
-	// 	window.sessionStorage.setItem("logged_in", false)
-    // }
-    // componentDidMount() {
-    //     window.addEventListener('load', this.handleLoad);
-    //  }
-
-
 
 	render(){
 		return(
+			
 			// <Provider store = {store}>
 			// {/* <Layout> */}
 			<Router>
@@ -56,6 +29,8 @@ class BodyData extends React.Component{
 					{/* <Route path="/Profile" component={Profile} store = {store}/>  */}
 					<Route path="/Dashboard" component={Dashboard} /> 
 					<Route path="/addbid" component={AddBid} /> 
+					<Route path="/workspot" component={WorkSpot} /> 
+					<Route path="/adminaction" component={AdminAction} /> 
 					</Switch>
 				</div>
 			</Router>

@@ -8,6 +8,7 @@ import './css/util.css';
 // import DisplayProjects from './displayprojects';
 import axios from 'axios';
 import Homepage from './homepage';
+import ProjectData from './projectdata'
 // import 'https://fonts.googleapis.com/css?family=Catamaran:100,200,300,400,500,600,700,800,900';
 // import 'https://fonts.googleapis.com/css?family=Lato:100,100i,300,300i,400,400i,700,700i,900,900i';
 import './css/one-page-wonder.min.css';
@@ -19,7 +20,6 @@ class AddBid extends React.Component{
         super(props);
         this.state = {days: null, usd: null, project_id : null, project_name : null, description : null, skills : null, employer : null, budget_range : null, total_bids : null}
         this.handleSubmit = this.handleSubmit.bind(this);
-        this.handleLoad = this.handleLoad.bind(this);
         this.handleDays = this.handleDays.bind(this);
         this.handleUSD = this.handleUSD.bind(this);
     }
@@ -50,8 +50,7 @@ class AddBid extends React.Component{
         })
     }
 
-    handleLoad(e){
-        e.preventDefault();
+    componentDidMount() {
         var project_details = { project_id : window.sessionStorage.getItem("project_id")}
         debugger
         axios.post('http://localhost:3001/projectfetch', project_details)
@@ -68,14 +67,10 @@ class AddBid extends React.Component{
             })
         });
     }
-    componentDidMount() {
-        window.addEventListener('load', this.handleLoad);
-     }
 
 	render(){
-        console.log(this.state);
         debugger
-        if(window.sessionStorage.logged_in !== null){
+        if(window.sessionStorage.logged_in !== null ){
             debugger
 		return(
             <div className="limiter">
@@ -83,43 +78,15 @@ class AddBid extends React.Component{
 			        <div className="wrap-login100 p-t-50 p-b-90">
 				        <form method = "POST" className="login100-form validate-form flex-sb flex-w">
 					        <span className="login100-form-title p-b-51"> Project Details</span>
-                            Project ID : <div className="wrap-input100 validate-input m-b-16" >
-						        <input className="input100" type="text" name="Name" placeholder={this.state.project_id} readOnly/>
-						        <span className="focus-input100"></span>
-					        </div>
-                            Project Name : <div className="wrap-input100 validate-input m-b-16" >
-						        <input className="input100" type="email" name="username" placeholder={this.state.project_name} readOnly/>
-						        <span className="focus-input100"></span>
-					        </div>
-                            Description : <div className="wrap-input100 validate-input m-b-16" >
-                                <input className="input100" type="number" name="phone_number" placeholder={this.state.description} readOnly/>
-                                <span className="focus-input100"></span>
-                            </div>
-                            Skills Required : <div className="wrap-input100 validate-input m-b-16" >
-						        <input className="input100" type="text" name="about_me" placeholder={this.state.skills} readOnly/>
-						        <span className="focus-input100"></span>
-					        </div>
-                            Employer : <div className="wrap-input100 validate-input m-b-16" >
-                                <input className="input100" type="text" name="skills" placeholder={this.state.employer} readOnly/>
-                                <span className="focus-input100"></span>
-                            </div>
-
-                            Budget Range : <div className="wrap-input100 validate-input m-b-16" >
-                                <input className="input100" type="text" name="skills" placeholder={this.state.budget_range} readOnly/>
-                                <span className="focus-input100"></span>
-                            </div>
-                            Total Bids : <div className="wrap-input100 validate-input m-b-16" >
-                                <input className="input100" type="text" name="skills" placeholder={this.state.total_bids} readOnly/>
-                                <span className="focus-input100"></span>
-                            </div>
-
+                           <ProjectData/>
                             {/* <div className="flex-sb-m w-full p-t-3 p-b-24">
                                 <div>
                                     <a href="#" onClick = {this.handleClick} className="txt1">
                                         Update Profile ?
                                     </a>
                                 </div>
-					        </div> */}
+                            </div> */}
+					        <span className="login100-form-title p-b-51"> Bid for the Project</span>
                             <div className="wrap-input100 validate-input m-b-16" >
                                 <input className="input100" type="number" name="skills" onChange = {this.handleDays} placeholder="Days" required/>
                                 <span className="focus-input100"></span>
@@ -139,12 +106,10 @@ class AddBid extends React.Component{
 	        </div>
         )
     } else{
-        return(<div>
+        return(
             <Homepage/>
-        </div>
         )
-        }
-    }
+    }}
 }
 
 export default AddBid;
