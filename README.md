@@ -76,6 +76,5 @@ Individual assignment for CMPE 273 - Enterprise Distributed Systems.
 > This will start ReactJS server on 3000 port and NodeJS server will start at 3001 port.
 
 ## 📝 Author
-[<img src="" align="right" height="100">](https://drive.google.com/file/d/1wo1PZj-W8ZvYPnUdPPPcmLsQXVHxxlzZ/view?usp=sharing)
 
 ##### Jaykumar Patel <kbd> [Github](https://github.com/pateljay134) / [LinkedIn](https://www.linkedin.com/in/pateljay134) / [E-Mail](mailto:pateljay134@gmail.com)</kbd>
