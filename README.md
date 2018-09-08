@@ -26,7 +26,7 @@ Individual assignment for CMPE 273 - Enterprise Distributed Systems.
 
 
 ## System Architecture
-![Architecture](https://drive.google.com/file/d/16Y-fB6i3FUanSjKrHry-omlouGe38lqH/view?usp=sharing)
+![Architecture]/Users/pateljay134/Desktop/Screen Shot 2018-09-08 at 15.55.00.png)
 
 ### Technology stack
 
